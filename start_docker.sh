@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /laradock/
+cd laradock/
 
 docker-compose up -d nginx mysql phpmyadmin redis workspace
-docker-compose exec workspace bash
+winpty docker-compose exec workspace bash
