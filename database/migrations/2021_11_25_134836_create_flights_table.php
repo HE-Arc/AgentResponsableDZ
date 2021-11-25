@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBooksTable extends Migration
+class CreateFlightsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateBooksTable extends Migration
      */
     public function up()
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('flights', function (Blueprint $table) {
             $table->id();
-            $table->string("title");
-            $table->integer("pages")->unsigned();
-            $table->integer("quantity")->unsigned();
-            $table->timestamps();
+            $table->foreignId('planes_id')->constrained()->onDelete('cascade');
+            $table->timestamp('departure');
         });
     }
 
@@ -29,6 +27,10 @@ class CreateBooksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('books');
+        Schema::table('flights', function (Blueprint $table) {
+            $table->dropForeign(['planes_id']);
+        });
+
+        Schema::dropIfExists('flights');
     }
 }
