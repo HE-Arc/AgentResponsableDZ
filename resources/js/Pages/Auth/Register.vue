@@ -12,7 +12,7 @@
       </div>
 
       <div class="mb-3">
-        <breeze-label for="surname" value="Surnameaa" />
+        <breeze-label for="surname" value="Surname" />
         <breeze-input id="surname" type="text" v-model="form.surname" required autofocus autocomplete="surname" />
       </div>
 
@@ -80,7 +80,9 @@ export default {
     return {
       form: this.$inertia.form({
         name: '',
+        surname: '',
         email: '',
+        phoneNumber: '',
         password: '',
         password_confirmation: '',
         terms: false,
