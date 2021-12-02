@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
+    //TODO remove this class and refactor
     use HasFactory;
 
     protected $fillable = [
