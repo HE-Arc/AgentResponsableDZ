@@ -40,7 +40,7 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'phoneNumber' => 'required|string', // TODO: add control
+            'phoneNumber' => 'required|min:10|numeric', // TODO: add control
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
