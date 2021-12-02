@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
+use config\logging;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -36,13 +38,17 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'phoneNumber' => 'required|string', // TODO: add control
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'surname' => $request->surname,
             'email' => $request->email,
+            'phoneNumber' => $request->phoneNumber,
             'password' => Hash::make($request->password),
         ]);
 

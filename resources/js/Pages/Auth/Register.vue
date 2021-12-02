@@ -12,7 +12,7 @@
       </div>
 
       <div class="mb-3">
-        <breeze-label for="surname" value="Surname" />
+        <breeze-label for="surname" value="Surnameaa" />
         <breeze-input id="surname" type="text" v-model="form.surname" required autofocus autocomplete="surname" />
       </div>
 
@@ -46,7 +46,6 @@
             <div v-show="form.processing" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-
             Register
           </breeze-button>
         </div>
