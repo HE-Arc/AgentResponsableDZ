@@ -12,18 +12,28 @@
       </div>
 
       <div class="mb-3">
+        <breeze-label for="surname" value="Surname" />
+        <breeze-input id="surname" type="text" v-model="form.surname" required autofocus autocomplete="surname" />
+      </div>
+
+      <div class="mb-3">
         <breeze-label for="email" value="Email" />
         <breeze-input id="email" type="email" v-model="form.email" required />
       </div>
 
       <div class="mb-3">
+        <breeze-label for="phoneNumber" value="Phone number" />
+        <breeze-input id="phoneNumber" type="tel" v-model="form.phoneNumber" required />
+      </div>
+
+      <div class="mb-3">
         <breeze-label for="password" value="Password" />
-        <breeze-input id="password" type="password" v-model="form.password" required autocomplete="new-password" />
+        <breeze-input id="password" type="password" v-model="form.password" required />
       </div>
 
       <div class="mb-3">
         <breeze-label for="password_confirmation" value="Confirm Password" />
-        <breeze-input id="password_confirmation" type="password" v-model="form.password_confirmation" required autocomplete="new-password" />
+        <breeze-input id="password_confirmation" type="password" v-model="form.password_confirmation" required />
       </div>
 
       <div class="mb-0">
@@ -36,7 +46,7 @@
             <div v-show="form.processing" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            
+
             Register
           </breeze-button>
         </div>
