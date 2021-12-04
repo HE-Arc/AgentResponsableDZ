@@ -6,7 +6,7 @@ Third year web developpement project
 
 The **25.11.2021**, it has been decided the project will not use vue.js, and only integrate a few pages
 
-This has been decided with (Mr. Grunenwald)[https://github.com/grunenwald] because we got many issues with docker, laravel and so on.
+This has been decided with [Mr. Grunenwald](https://github.com/grunenwald) because we got many issues with docker, laravel and so on.
 
 The pages that are still integrated are the main page, with all the flights, the login page and the user-management page.
 
