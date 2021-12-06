@@ -15,10 +15,11 @@ class CreatePlanesTable extends Migration
     {
         Schema::create('planes', function (Blueprint $table) {
             $table->id();
-            $table->string('model');
-            $table->string('registration');
-            $table->integer("seatCount")->unsigned();
-            $table->string("picture");
+            $table->string('model', 100);
+            $table->string('registration', 100);
+            $table->integer('seat_count')->unsigned();
+            $table->string('picture', 100);
+            $table->timestamps();
         });
     }
 

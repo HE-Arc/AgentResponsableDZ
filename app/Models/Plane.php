@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class planes extends Model
+class Plane extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
     protected $fillable = [
         'model',
         'registration',
-        'seatCount',
-        'picutre'
+        'seat_count',
+        'picture',
     ];
+
+    public function flights()
+    {
+        return $this->hasMany(Flight::class);
+    }
 }

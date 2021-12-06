@@ -15,8 +15,9 @@ class CreateFlightsTable extends Migration
     {
         Schema::create('flights', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('planes_id')->constrained()->onDelete('cascade');
+            $table->foreignid('plane_id')->references('id')->on('planes')->onDelete('cascade');
             $table->timestamp('departure');
+            $table->timestamps();
         });
     }
 
@@ -27,10 +28,6 @@ class CreateFlightsTable extends Migration
      */
     public function down()
     {
-        Schema::table('flights', function (Blueprint $table) {
-            $table->dropForeign(['planes_id']);
-        });
-
         Schema::dropIfExists('flights');
     }
 }
