@@ -1,0 +1,24 @@
+header{
+    background-color: orange;
+    height: 2em;
+    display: inline-flex;
+    width: 100%;
+}
+
+#imgWave{
+    height: 1em;
+    width: 100%;
+}
+
+#imgLogo{
+    height: 4em;
+}
+
+body{
+    margin: 0px;
+    font-size: 2em;
+}
+
+#content{
+    margin:2px;
+}
