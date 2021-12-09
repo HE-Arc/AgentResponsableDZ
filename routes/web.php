@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\ScheduleController;
+
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 
@@ -22,3 +24,5 @@ Route::get('users/{id}', function ($id) {
         'user' => User::findOrFail($id)
     ]);
 });
+
+Route::get("schedule",[ScheduleController::class,'index'])->name("Schedule");
