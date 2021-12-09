@@ -1,8 +1,4 @@
 
-# modified on server, should not be pushed
-app/Providers/AppServiceProvider.php
-core/
-
 # Created by https://www.toptal.com/developers/gitignore/api/laravel,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=laravel,visualstudiocode
 
