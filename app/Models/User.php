@@ -19,13 +19,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'surname',
         'email',
         'password',
-        'phoneNumber',
-        'isRDZ',
-        'credits4000',
-        'credits1500'
+        'surname',
+        'phonen_number',
     ];
 
     /**
@@ -36,6 +33,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'is_RDZ',
     ];
 
     /**
@@ -47,8 +45,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+     
     public function flights()
     {
-        return $this->hasMany(flights::class);
+        return $this->belongsToMany(Flight::class);
     }
+
 }

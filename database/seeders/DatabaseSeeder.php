@@ -14,6 +14,18 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \App\Models\User::factory(10)->create();
-        $this->call(BookSeeder::class);
+        \App\Models\Plane::factory(3)->create();
+        \App\Models\Flight::factory(5)->create();
+
+        foreach(\App\Models\Flight::all() as $f){
+            $users = \App\Models\User::inRandomOrder()->take(rand(5,10))->pluck("id");
+            $f->users()->attach($users);
+        }
+        /*$flights = \App\Models\Flight::all();
+        foreach(\App\Models\User::all() as $u){
+            $flights[rand(0,count($flights))]->attach($u);
+            $flights[rand(0,count($flights))]->attach($u);
+            $flights[rand(0,count($flights))]->attach($u);
+        }*/
     }
 }
