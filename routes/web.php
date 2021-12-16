@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\UserController;
 
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -17,7 +17,8 @@ use App\Models\User;
 |
 */
 
-Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+Route::get('/', [ScheduleController::class, 'index'])->name('welcome');
+Route::get("schedule", [ScheduleController::class,'index'])->name("schedule");
 
 Route::get('users/{id}', function ($id) {
     return view('user',[
@@ -25,4 +26,4 @@ Route::get('users/{id}', function ($id) {
     ]);
 });
 
-Route::get("schedule",[ScheduleController::class,'index'])->name("Schedule");
+Route::resource('user', UserController::class);
