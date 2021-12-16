@@ -1,7 +1,6 @@
 @extends("layouts.app")
 @section("content")
 <table>
-    {{ strtotime(Date::now()) }}
     <tr>
         <td>Avion</td>
         <td>Départ</td>
@@ -24,8 +23,8 @@
         </td>
         <td>{{ date("H:m",strtotime($f->departure)) }}</td>
         <td>{{ count($f->users) }}/{{ $f->plane->seat_count}}</td>
-        <td>Booking</td>
-        @if (!isset($user))
+        <td>{{ $f->id }}</td>
+        @if (isset($user))
             @if(strtotime($f->departure) < strtotime(Date::now()) /*If the flight already departed*/)
                 <img src="/images/schdule/joinPlaneDeparted.png"/>
             @elseif (count($f->users) >= $f->plane->seat_count /*If the flight is full*/)
@@ -35,7 +34,6 @@
             @else
                 <img src="/images/schdule/joinPlaneOK.png"/>
             @endif
-            <td>Rejoindre</td>
         @endif
     </tr>
     @endforeach
