@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\FlightController;
 
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -25,4 +25,6 @@ Route::get('users/{id}', function ($id) {
     ]);
 });
 
-Route::get("schedule",[ScheduleController::class,'index'])->name("Schedule");
+Route::get("schedule",[FlightController::class,'index'])->name("Schedule");
+
+Route::get('flight/{id}',[FlightController::class,'show'])->name("Flight");

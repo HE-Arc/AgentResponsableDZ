@@ -1,5 +1,6 @@
 @extends("layouts.app")
 @section("content")
+
 <table>
     <tr>
         <td>Avion</td>
@@ -16,9 +17,9 @@
         <td>
 
         @if (strtotime($f->departure) < strtotime(Date::now()) /*If the flight already departed*/)
-            <img src="/images/schedule/landed.png"/>
+            <i class="fas fa-check-circle"></i>
         @else
-            <img src="/images/schedule/loadingPlane.png"/>
+            <i class="fas fa-times-circle"></i>
         @endif
         </td>
         <td>{{ date("H:m",strtotime($f->departure)) }}</td>
