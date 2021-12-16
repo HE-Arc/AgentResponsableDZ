@@ -44,7 +44,7 @@ class UserController extends Controller
         ]);
 
         User::create($attributes);
-        return redirect()->route('schedule')->with('success', 'Vous avez été ajouté avec succès');
+        return redirect()->route('home')->with('success', 'Vous avez été ajouté avec succès');
     }
 
     /**

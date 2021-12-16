@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ScheduleController;
+
+use App\Http\Controllers\FlightController;
 use App\Http\Controllers\UserController;
 
 use Illuminate\Support\Facades\Route;
@@ -17,8 +18,7 @@ use App\Models\User;
 |
 */
 
-Route::get('/', [ScheduleController::class, 'index'])->name('welcome');
-Route::get("schedule", [ScheduleController::class,'index'])->name("schedule");
+Route::get('/', [FlightController::class, 'index'])->name('home');
 
 Route::get('users/{id}', function ($id) {
     return view('user',[
@@ -27,3 +27,4 @@ Route::get('users/{id}', function ($id) {
 });
 
 Route::resource('user', UserController::class);
+Route::resource('flight', FlightController::class);
