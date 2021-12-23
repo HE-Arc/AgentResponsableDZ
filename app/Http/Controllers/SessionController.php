@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use Illuminate\Validation\ValidationException;
 
-class UserController extends Controller
+class SessionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        dd('bonjour, je suis user');
+        //
     }
 
     /**
@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        return view('login');
     }
 
     /**
@@ -36,15 +36,18 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $attributes = $request->validate([
-            'name' => ['required', 'min:3', 'max:30'],
-            'surname' => ['required', 'min:3', 'max:30'],
-            'phone_number' => ['required', 'numeric', 'regex:/\d{3}\s?\d{3}\s?\d{2}\s?\d{2}/u'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'confirmed', 'min:7', 'max:30'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'min:7', 'max:30']
         ]);
 
-        User::create($attributes);
-        return redirect()->route('home')->with('success', 'Vous avez été ajouté avec succès');
+        if (auth()->attempt($attributes)) {
+            // session fixation
+            session()->regenerate();
+
+            return redirect('/')->with('success', 'Bon saut !');
+        }
+
+        throw ValidationException::withMessages(['password' => 'Mauvais email ou mot de passe']);
     }
 
     /**
@@ -87,8 +90,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        Auth()->logout();
+        return redirect()->route('home')->with('success', 'Vous avez été déconnecté');
     }
 }

@@ -1,7 +1,8 @@
 @extends("layouts.app")
 @section("content")
 <div class="form-group">
-<form method="POST" action="{{ route('user.store') }}">
+
+<form method="POST" action="{{ route('register') }}">
     @csrf
         <div class="block">
             <input
@@ -74,7 +75,7 @@
                 name="password_confirmation"
                 required
                 />
-            <label for="email">confirmer mot de passe</label>
+            <label for="password_confirmation">confirmer mot de passe</label>
             @error('confirm_password')
             <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -83,7 +84,8 @@
         <div class="block">
             <input type="submit" value="soumettre"></input>
         </div>
-
     </form>
+
+    <a>mot de passe oublié ?</a>
 </div>
 @endsection
