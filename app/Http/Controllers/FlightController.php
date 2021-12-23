@@ -65,12 +65,6 @@ class FlightController extends Controller
         return view("flight",["flight"=>$flight]);
     }
 
-
-
-
-
-
-
     public function edit($id){
         //TODO check isRDZ
         $flight = Flight::findOrFail($id);
@@ -89,6 +83,18 @@ class FlightController extends Controller
         $flight = Flight::findOrFail($id);
         $flight->delete();
         return redirect()->route('flight.index')
+                    ->with('success','Vol supprimé');
+    }
+
+    public function removePassenger(Request $request){
+        $request->validate([
+            'flight_id' => 'required|exists:flights,id',
+            'user_id'=> 'required|exists:users,id',
+        ]);
+        $f = Flight::find($request->input("flight_id"));
+        $f->users()->detach($request->input("user_id"));
+
+        return redirect()->route('flight.edit',$request->input("flight_id"))
                     ->with('success','Vol supprimé');
     }
 }
