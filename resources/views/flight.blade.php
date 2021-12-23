@@ -8,7 +8,7 @@
     @else
         <i class="fas fa-times-circle"></i>
     @endif</div>
-    <div>Heure de décolage : <br>{{ date("H:m d.m.y",strtotime($flight->departure)) }}
+    <div>Heure de décolage : <br>{{ date("H:i d.m.y",strtotime($flight->departure)) }}
     <h3>Passagers : </h3>
     @foreach ($flight->users as $u)
         {{ $u->name }}<br>

@@ -29,3 +29,4 @@ Route::get('users/{id}', function ($id) {
 Route::resource('user', UserController::class);
 Route::resource('flight', FlightController::class);
 Route::post('flight/removepassenger',[FlightController::class,"removePassenger"])->name('flight.removePassenger');
+Route::post('flight/addpassenger',[FlightController::class,"addPassenger"])->name('flight.addPassenger');
