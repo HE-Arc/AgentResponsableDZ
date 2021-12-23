@@ -4,12 +4,13 @@ Workshop Laravel donné aux étudiants de 3ème année à la HE-Arc dans le cadr
 
 # Important
 
-The **25.11.2021**, it has been decided the project will not use vue.js, and only integrate a few pages
+Le **25.11.2021**, cela a été décidé de ne pas utiliser vue.js, ansi que d'intégrer seulement quelques pages.
 
-This has been decided with [Mr. Grunenwald](https://github.com/grunenwald) because we are only two, and got many issues with docker, laravel and so on.
+Cela a été décidé en accord avec [Mr. Grunenwald](https://github.com/grunenwald) car nous ne sommes que deux et que nous avons eu beaucoup de problèmes (notamment avec docker).
 
-The pages that are still integrated are the main page, with all the flights, the login page and the user-management page.
+Les pages toujours intégrées sont la page d'accueil (avec les horaires), la page de login et la page de modification d'utilisateur.
 
+Pour le login, etc... nous n'utilions pas breeze, car après avoir réussi à démarrer notre projet, en devait modifier l'utilisateur et nous ne comprenions pas quoi modifier pour que cela fonctionne toujours avec breeze.
 
 Les prochaines étapes permettent de mettre en place l'environnement de développement et de suivre le workshop dans son intégralité.
 
