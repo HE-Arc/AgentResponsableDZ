@@ -22,7 +22,7 @@
             <i class="fas fa-times-circle"></i>
         @endif
         </td>
-        <td>{{ date("H:m",strtotime($f->departure)) }}</td>
+        <td>{{ date("H:i",strtotime($f->departure)) }}</td>
         <td>{{ count($f->users) }}/{{ $f->plane->seat_count}}</td>
         <td>{{ $f->id }}</td>
         @if (isset($user))

@@ -3,6 +3,8 @@ header{
     height: 2em;
     display: inline-flex;
     width: 100%;
+    background-image: url(/images/header_image.png);
+    background-repeat: no-repeat;
 }
 
 #imgWave{
@@ -16,7 +18,7 @@ header{
 
 body{
     margin: 0px;
-    font-size: 2em;
+    font-size: 1em;
 }
 
 #content{
