@@ -124,14 +124,24 @@ class UserController extends Controller
         ->with('success','Votre mot de passe a été mis à jour');
     }
 
+    public function update_from_admin(Request $request, $id)
+    {
+        // verify the connected user is admin
+        if (!UserController::isConnected() || auth()->user()->is_RDZ)
+            return redirect()->route('home')
+            ->with('error', 'Vous n\'avez pas les droits pour cela');
+
+        // update specified user
+    }
+
     /**
      * Show page to manage all users
      */
     public function manage()
     {
-        if (UserController::isConnected() || auth()->user()->is_RDZ)
+        if (UserController::isConnected() && auth()->user()->is_RDZ)
         {
-            return view('manage_users');
+            return view('manage_users', ['users' => User::all()]);
         }
         return redirect()->route('home')
         ->with('error', 'Vous n\'avez pas les droits pour cela');

@@ -44,5 +44,6 @@ Route::post('flight/addpassenger',[FlightController::class,"addPassenger"])->nam
 Route::get('user/manage', [UserController::class, 'manage'])->middleware('auth')->name('user.manage');
 Route::put('user/update_email/{id}', [UserController::class, 'update_email'])->middleware('auth')->name('user.update_email');
 Route::put('user/update_password/{id}', [UserController::class, 'update_password'])->middleware('auth')->name('user.update_password');
+Route::put('user/update_from_admin/{id}', [UserController::class, 'update_from_admin'])->middleware('auth')->name('user.update_from_admin');
 Route::resource('user', UserController::class);
 
