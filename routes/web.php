@@ -4,6 +4,7 @@
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\UserController;
 
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -21,11 +22,11 @@ use App\Models\User;
 
 Route::get('/', [FlightController::class, 'index'])->name('home');
 
-Route::get('users/{id}', function ($id) {
-    return view('user',[
-        'user' => User::findOrFail($id)
-    ]);
-});
+// Route::get('users/{id}', function ($id) {
+//     return view('user',[
+//         'user' => User::findOrFail($id)
+//     ]);
+// });
 
 Route::resource('flight', FlightController::class);
 
@@ -38,3 +39,6 @@ Route::post('login', [SessionController::class, 'store'])->middleware('guest')->
 Route::post('logout', [SessionController::class, 'destroy'])->middleware('auth')->name('logout');
 Route::post('flight/removepassenger',[FlightController::class,"removePassenger"])->name('flight.removePassenger');
 Route::post('flight/addpassenger',[FlightController::class,"addPassenger"])->name('flight.addPassenger');
+
+Route::resource('user', UserController::class);
+Route::post('user.update_password', [UserController::class, 'update_password'])->middleware('auth');
