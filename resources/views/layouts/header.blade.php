@@ -5,7 +5,7 @@
     <a href="{{ route('register') }}">crée un compte</a>
     @endguest
     @auth
-    <span>Welcome, {{ auth()->user()->name }} !</span>
+    <span>Welcome, {{ auth()->user()->surname }} !</span>
     <form method="post" action="{{ route('logout') }}">
         @csrf
         <input type="submit" value="se déconnecter"></a>
