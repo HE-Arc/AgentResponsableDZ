@@ -40,6 +40,9 @@ Route::post('logout', [SessionController::class, 'destroy'])->middleware('auth')
 Route::post('flight/removepassenger',[FlightController::class,"removePassenger"])->name('flight.removePassenger');
 Route::post('flight/addpassenger',[FlightController::class,"addPassenger"])->name('flight.addPassenger');
 
-Route::resource('user', UserController::class);
+// be carreful of order, if you put user/manage under Route::resource('user'), you can't access the page
+Route::get('user/manage', [UserController::class, 'manage'])->middleware('auth')->name('user.manage');
 Route::put('user/update_email/{id}', [UserController::class, 'update_email'])->middleware('auth')->name('user.update_email');
 Route::put('user/update_password/{id}', [UserController::class, 'update_password'])->middleware('auth')->name('user.update_password');
+Route::resource('user', UserController::class);
+

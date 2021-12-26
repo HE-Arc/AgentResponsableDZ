@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Flight;
 use App\Models\Plane;
 use App\Models\User;
+use App\Http\Controllers\UserController;
 
 use function PHPUnit\Framework\isNull;
 
@@ -17,14 +18,17 @@ class FlightController extends Controller
     }
 
     public function create(){
-        //TODO Check is rdz
+
         $planes = Plane::all(); //To give a selection to the user
         return view("newFlightForm", ['planes' => $planes]);
     }
 
     public function store(Request $request){
-        //TODO check isRDZ
-        $request->validate([
+
+        if (! UserController::isConnected() || auth()->user()->is_RDZ)
+            return redirect('/')->with('error', 'Vous n\'avez pas les droits');
+
+            $request->validate([
             'plane' => "required|min:1",
             'departure'=> "required|date_format:H:i",
         ]);
@@ -67,7 +71,9 @@ class FlightController extends Controller
     }
 
     public function edit($id){
-        //TODO check isRDZ
+
+        if (! UserController::isConnected() || auth()->user()->is_RDZ)
+            return redirect('/')->with('error', 'Vous n\'avez pas les droits');
 
         $flight = Flight::findOrFail($id);
         $users = User::all(); //For suggestions to add user to flight
@@ -75,7 +81,10 @@ class FlightController extends Controller
     }
 
     public function update(Request $request, $id){
-        //TODO check isRDZ
+
+        if (! UserController::isConnected() || auth()->user()->is_RDZ)
+            return redirect('/')->with('error', 'Vous n\'avez pas les droits');
+
         $request->validate([
             'departure'=> "required|date_format:H:i",
         ]);
@@ -86,7 +95,10 @@ class FlightController extends Controller
     }
 
     public function destroy($id){
-        //TODO Check is RDZ
+
+        if (! UserController::isConnected() || auth()->user()->is_RDZ)
+            return redirect('/')->with('error', 'Vous n\'avez pas les droits');
+
         $flight = Flight::findOrFail($id);
         $flight->delete();
         return redirect()->route('flight.index')
@@ -94,6 +106,7 @@ class FlightController extends Controller
     }
 
     public function removePassenger(Request $request){
+
         $request->validate([
             'flight_id' => 'required|exists:flights,id',
             'user_id'=> 'required|exists:users,id',

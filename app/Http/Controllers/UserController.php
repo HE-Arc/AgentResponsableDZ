@@ -71,7 +71,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (!$this->verifyId($id))
+        if (!UserController::verifyId($id))
             return redirect('/')->with('error', 'wrong id mate');
 
         $request->validate([
@@ -93,6 +93,9 @@ class UserController extends Controller
      */
     public function update_email(Request $request, $id)
     {
+        if (!UserController::verifyId($id))
+            return redirect('/')->with('error', 'wrong id mate');
+
         $request->validate([
             'email' => ['required', 'email', 'confirmed', 'unique:users,email'],
         ]);
@@ -109,13 +112,29 @@ class UserController extends Controller
      */
     public function update_password(Request $request, $id)
     {
+        if (!UserController::verifyId($id))
+            return redirect('/')->with('error', 'wrong id mate');
+
         $request->validate([
             'password' => ['required', 'min:7', 'max:30', 'confirmed'],
         ]);
 
         User::findOrFail($id)->update($request->all());
         return redirect()->route('home')
-        ->with('success','Votre adresse mail a été mis à jour');
+        ->with('success','Votre mot de passe a été mis à jour');
+    }
+
+    /**
+     * Show page to manage all users
+     */
+    public function manage()
+    {
+        if (UserController::isConnected() || auth()->user()->is_RDZ)
+        {
+            return view('manage_users');
+        }
+        return redirect()->route('home')
+        ->with('error', 'Vous n\'avez pas les droits pour cela');
     }
 
     /**
@@ -129,12 +148,21 @@ class UserController extends Controller
         //
     }
 
-    private function verifyId($id)
+    /**
+     * verify the current connected user is the same user the connected user tries to modify
+     *
+     * => if $id == connected_user()->id...
+     */
+    public static function verifyId($id)
     {
-        if ($id != auth()->user()->id)
-        {
-            return False;
-        }
-        return True;
+        return UserController::isConnected() && $id == auth()->user()->id;
+    }
+
+    /**
+     * return if the user is connected
+     */
+    public static function isConnected()
+    {
+        return auth()->check();
     }
 }

@@ -13,7 +13,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
+        // insert root user
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => 'root',
+            'surname' => 'sroot',
+            'email' => 'root@example.com',
+            'phone_number' => '1234567890',
+            'password' => bcrypt('IAmRoot'),
+            'is_RDZ' => true,
+        ]);
+
+        // insert lambda user
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => 'alphabet',
+            'surname' => 'albedo',
+            'email' => 'al@pha.bet',
+            'phone_number' => '0987654321',
+            'password' => bcrypt('abcdefg'),
+            'is_RDZ' => false,
+        ]);
+
         \App\Models\Plane::factory(3)->create();
         \App\Models\Flight::factory(5)->create();
 
