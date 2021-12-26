@@ -32,6 +32,11 @@ docker-compose up -d nginx mysql phpmyadmin redis workspace
 cp .env.example .env
 ```
 
+## Modify the newly created .env
+```bash
+MYSQL_DATABASE=ardz_db
+```
+
 ## Run in laradock
 
 ```bash
