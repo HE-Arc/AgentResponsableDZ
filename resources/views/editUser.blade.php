@@ -3,7 +3,6 @@
 @section("content")
 
 <h3>Modification de l'utilisateur:</h3>
-<div class="container">
     <div class="row">
         <form action="{{ route('user.update', auth()->user()->id) }}" method="post">
             @csrf
@@ -76,5 +75,4 @@
             </div>
         </form>
     </div>
-</div>
 @endsection

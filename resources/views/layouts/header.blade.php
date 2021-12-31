@@ -13,7 +13,7 @@
         <a href="{{ route('user.edit', auth()->user()->id) }}">Modifier le profil</a>
 
         @if(auth()->user()->is_RDZ)
-            <a href="{{ route('user.manage') }}">Manage les utilisateurs</a>
+            <a href="{{ route('user.manage', auth()->user()->id) }}">Manage les utilisateurs</a>
         @endif
     @endauth
 </header>

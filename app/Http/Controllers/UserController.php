@@ -127,11 +127,43 @@ class UserController extends Controller
     public function update_from_admin(Request $request, $id)
     {
         // verify the connected user is admin
-        if (!UserController::isConnected() || auth()->user()->is_RDZ)
+        if (!UserController::isConnected() || !auth()->user()->is_RDZ || auth()->user()->id != $id)
             return redirect()->route('home')
             ->with('error', 'Vous n\'avez pas les droits pour cela');
 
         // update specified user
+
+        $attributes = $request->validate([
+            'id' => ['required', 'integer', 'min:0'],
+            'name' => ['required', 'min:3', 'max:30'],
+            'surname' => ['required', 'min:3', 'max:30'],
+            'phone_number' => ['required', 'numeric', 'regex:/\d{3}\s?\d{3}\s?\d{2}\s?\d{2}/u'],
+            'email' => ['required', 'email', 'email'],
+            'password' => ['required', 'min:7', 'max:30', 'confirmed',],
+            'credits1500' => ['required', 'integer', 'min:0'],
+            'credits4000' => ['required', 'integer', 'min:0']
+        ]);
+
+        $users = User::where('id', '=', $request->input('id'))->get();
+        if ($users->count() != 1)
+            dd('error');
+
+        // user to modify
+        $user = $users[0];
+
+        // verify the new mail is not taken
+        if ($request->input('email') != $user->email) {
+            $users = User::where('email', '=', $request->input('email'))->get();
+            // is length is not 0 => the mail is already taken
+            if ($users->count() != 0)
+                return redirect()->back()->withErrors(['email' => 'email already in use']);
+        }
+
+        $user->update($attributes);
+        $user->update(['is_RDZ' => $request->has('isRDZ')]);
+
+        return redirect()->route('home')
+        ->with('success', 'user updated');
     }
 
     /**
@@ -145,6 +177,34 @@ class UserController extends Controller
         }
         return redirect()->route('home')
         ->with('error', 'Vous n\'avez pas les droits pour cela');
+    }
+
+
+    public function manage_ajax(Request $request)
+    {
+        if (UserController::isConnected() && auth()->user()->is_RDZ)
+        {
+            $users = User::where('email', '=', $request->input('mail'))->get();
+            if ($users->count() == 1) {
+                $user = $users[0];
+
+                return response()->json([
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'surname' => $user->surname,
+                    'phone_number' => $user->phone_number,
+                    'email' => $user->email,
+                    'isRDZ' => $user->is_RDZ,
+                    'credits1500' => $user->credits1500,
+                    'credits4000' => $user->credits4000
+                ]);
+            }
+
+            return response()->json([
+                'message' => 'Database error.'
+            ], 500);
+        }
+        return null;
     }
 
     /**

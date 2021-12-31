@@ -4,84 +4,90 @@
 
 <form method="POST" action="{{ route('register') }}">
     @csrf
-        <div class="block">
+        <div class="row">
+            <label for="name">Nom</label>
             <input
                 type="text"
                 name="name"
                 value="{{ old('name') }}"
                 required
                 />
-            <label for="name">Nom</label>
+
             @error('name')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="block">
+        <div class="row">
+            <label for="surname">Surnom</label>
             <input
                 type="text"
                 name="surname",
                 value="{{ old('surname') }}"
                 required
                 />
-            <label for="surname">Surnom</label>
+
             @error('surname')
             <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="block md-6">
+        <div class="row">
+            <label for="phone_number">numéro de téléphone</label>
             <input
                 type="phone"
                 name="phone_number"
                 value="{{ old('phone_number') }}"
                 required
                 />
-            <label for="phone_number">numéro de téléphone</label>
+
             @error('phone_number')
             <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="block">
+        <div class="row">
+            <label for="email">email</label>
             <input
                 type="email"
                 name="email"
                 value="{{ old('email') }}"
                 required
                 />
-            <label for="email">email</label>
+
             @error('email')
             <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
 
 
-        <div class="block">
+        <div class="row">
+            <label for="password">mot de passe</label>
+
             <input
                 type="password"
                 name="password"
                 required
                 />
-            <label for="password">mot de passe</label>
             @error('password')
             <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="block">
+        <div class="row">
+            <label for="password_confirmation">confirmer mot de passe</label>
             <input
                 type="password"
                 name="password_confirmation"
                 required
                 />
-            <label for="password_confirmation">confirmer mot de passe</label>
+
             @error('confirm_password')
             <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="block">
+        <div class="row">
             <input type="submit" value="soumettre"></input>
         </div>
     </form>

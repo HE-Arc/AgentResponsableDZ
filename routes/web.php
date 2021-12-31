@@ -42,6 +42,10 @@ Route::post('flight/addpassenger',[FlightController::class,"addPassenger"])->nam
 
 // be carreful of order, if you put user/manage under Route::resource('user'), you can't access the page
 Route::get('user/manage', [UserController::class, 'manage'])->middleware('auth')->name('user.manage');
+
+// TODO: change to post
+Route::get('user/user_manage_ajax', [UserController::class, 'manage_ajax'])->middleware('auth');
+
 Route::put('user/update_email/{id}', [UserController::class, 'update_email'])->middleware('auth')->name('user.update_email');
 Route::put('user/update_password/{id}', [UserController::class, 'update_password'])->middleware('auth')->name('user.update_password');
 Route::put('user/update_from_admin/{id}', [UserController::class, 'update_from_admin'])->middleware('auth')->name('user.update_from_admin');
