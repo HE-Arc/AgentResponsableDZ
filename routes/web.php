@@ -38,7 +38,7 @@ Route::post('login', [SessionController::class, 'store'])->middleware('guest')->
 Route::post('logout', [SessionController::class, 'destroy'])->middleware('auth')->name('logout');
 Route::post('flight/removepassenger',[FlightController::class,"removePassenger"])->name('flight.removePassenger');
 Route::post('flight/addpassenger',[FlightController::class,"addPassenger"])->name('flight.addPassenger');
-Route::get('flight/join',[FlightController::class,"joinFlight"])->name('flight.join');
+Route::put('flight/join',[FlightController::class,"join"])->name('flight.join');
 
 Route::resource('flight', FlightController::class);
 
