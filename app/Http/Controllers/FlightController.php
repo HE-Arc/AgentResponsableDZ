@@ -18,6 +18,8 @@ class FlightController extends Controller
     }
 
     public function create(){
+        if (! UserController::isConnected() || auth()->user()->is_RDZ)
+            return redirect('/')->with('error', 'Vous n\'avez pas les droits');
 
         $planes = Plane::all(); //To give a selection to the user
         return view("newFlightForm", ['planes' => $planes]);
@@ -106,6 +108,8 @@ class FlightController extends Controller
     }
 
     public function removePassenger(Request $request){
+        if (! UserController::isConnected() || auth()->user()->is_RDZ)
+            return redirect('/')->with('error', 'Vous n\'avez pas les droits');
 
         $request->validate([
             'flight_id' => 'required|exists:flights,id',
@@ -119,6 +123,9 @@ class FlightController extends Controller
     }
 
     public function addPassenger(Request $request){
+        if (! UserController::isConnected() || auth()->user()->is_RDZ)
+            return redirect('/')->with('error', 'Vous n\'avez pas les droits');
+
         $request->validate([
             'flight_id' => 'required|exists:flights,id',
             'email' => 'required|exists:users,email',
@@ -130,5 +137,56 @@ class FlightController extends Controller
 
         return redirect()->route('flight.edit',$request->input("flight_id"))
                     ->with('success','Vol supprimé');
+    }
+
+    public function joinFlight(Request $request){
+        if (!UserController::isConnected()){
+            return redirect('/')->with('error', 'Vous n\'êtes pas connecté');
+        }
+
+
+        $request->validate([
+            'flight_id' => 'required|exists:flights,id',
+            'flight_type'=>'required|numeric|in:1500,4000',
+        ]);
+
+
+        //Check flight space
+        $flight = Flight::findOrFail($request->input("flight_id"));
+
+        if(count($flight->users) == $flight->plane->seat_count){ //Plane full
+            redirect()->route('flight.index')
+            ->with('error',"Ce vol est complet");
+        }
+
+        //TODO: Check if user is already in flight
+
+
+
+        //Check user credits
+        $type = $request->input("flight_type");
+        $user = auth()->user();
+
+        if($type == 4000) {
+            if($user->credits4000 > 0){
+                $user->update(["credits4000"=> $user->credits4000 - 1]);
+                $flight->users()->attach($user->id);
+                return redirect()->route('flight.index')
+                    ->with('Success',"Vol rejoin avec success");
+            }
+        }else if($type == 1500){
+            if($user->credits1500 > 0){
+                $user->update(["credits1500"=> $user->credits1500 - 1]);
+                $flight->users()->attach($user->id);
+                return redirect()->route('flight.index')
+                    ->with('Success',"Vol rejoin avec success");
+            }
+        }
+        return redirect()->route('flight.index')
+            ->with('error',"Crédits insufisant");
+
+
+
+
     }
 }

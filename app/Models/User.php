@@ -23,6 +23,8 @@ class User extends Authenticatable
         'password',
         'phone_number',
         'is_RDZ',
+        'credits4000',
+        'credits1500',
     ];
 
     /**

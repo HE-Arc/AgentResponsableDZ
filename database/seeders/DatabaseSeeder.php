@@ -33,6 +33,8 @@ class DatabaseSeeder extends Seeder
             'is_RDZ' => false,
         ]);
 
+        \App\Models\User::factory(5)->create();
+
         \App\Models\Plane::factory(3)->create();
         \App\Models\Flight::factory(5)->create();
 
