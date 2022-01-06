@@ -14,7 +14,7 @@ class FlightController extends Controller
 {
     public function index() {
         $flights = Flight::orderBy('departure', 'asc')->get();
-        return view('schedule', ['flights' => $flights]);
+        return view('schedule', ['flights' => $flights, "user" => auth()->user()]);
     }
 
     public function create(){
@@ -140,36 +140,39 @@ class FlightController extends Controller
     }
 
     public function join(Request $request){
+        
         if (!UserController::isConnected()){
             return redirect('/')->with('error', 'Vous n\'êtes pas connecté');
         }
-
 
         $request->validate([
             'flight_id' => 'required|exists:flights,id',
             'flight_type'=>'required|numeric|in:1500,4000',
         ]);
         $flight = Flight::findOrFail($request->input("flight_id"));
-
+        
         //Check if flight is departed
         if(strtotime($flight->departure) < time()){
+            
             return redirect()->route('flight.index')
             ->with('error',"Ce vol n'est plus rejoinable");
         }
 
         //Check flight space
         
-
+        
         if(count($flight->users) >= $flight->plane->seat_count){ //Plane full
+            
             return redirect()->route('flight.index')
             ->with('error',"Ce vol est complet");
         }
 
         
-        
+       
         //Check if user is already in flight
         $user = auth()->user();
         if(FlightController::in_flight($user,$flight)){
+            
             return redirect()->route('flight.index')
             ->with('error',"Vous êtes déja dans ce vol");
         }
@@ -177,7 +180,7 @@ class FlightController extends Controller
         //Check user credits
         $type = $request->input("flight_type");
         
-
+        
         if($type == 4000) {
             if($user->credits4000 > 0){
                 $user->update(["credits4000"=> $user->credits4000 - 1]);
@@ -193,11 +196,12 @@ class FlightController extends Controller
                     ->with('success',"Vol rejoin avec success");
             }
         }
+        
         return redirect()->route('flight.index')
             ->with('error',"Crédits insufisant");
     }
 
-    private function in_flight($user,$flight){
+    public static function in_flight($user,$flight){
         foreach($flight->users as $u){
             if($u->id == $user->id)
                 return true;
