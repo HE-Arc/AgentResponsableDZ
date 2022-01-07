@@ -1,5 +1,8 @@
 @extends("layouts.app")
 @section("content")
+<?php
+use App\Http\Controllers\FlightController;
+?>
 
 <table>
     <tr>
@@ -26,15 +29,26 @@
         <td>{{ count($f->users) }}/{{ $f->plane->seat_count}}</td>
         <td>{{ $f->id }}</td>
         @if (isset($user))
-            @if(strtotime($f->departure) < strtotime(Date::now()) /*If the flight already departed*/)
-                <img src="/images/schdule/joinPlaneDeparted.png"/>
-            @elseif (count($f->users) >= $f->plane->seat_count /*If the flight is full*/)
-                <img src="/images/schdule/joinPlaneFull.png"/>
-            @elseif($user->credits4000 <= 0 && $user->credits1500 <= 0  /*If there is space but the user is poor*/)
-                <img src="/images/schdule/joinPlaneNoCredits.png"/>
-            @else
-                <img src="/images/schdule/joinPlaneOK.png"/>
+        <td>
+            @if(strtotime($f->departure) < strtotime(Date::now() ) ||  count($f->users) >= $f->plane->seat_count ||   FlightController::in_flight($user,$f)/*If the flight already departed*/)
+            @elseif($user->credits4000 >= 0)
+            <form action="{{ route('flight.join') }}" method="post">
+                @csrf
+                @method('put')
+                <input type="hidden" name="flight_id" value="{{ $f->id }}"/>
+                <input type="hidden" name="flight_type" value="4000"/>
+                <button type="submit">4000</button>
+            </form>
+            @elseif($user->credits1500 <= 0)
+            <form action="{{ route('flight.join') }}" method="post">
+                @csrf
+                @method('put')
+                <input type="hidden" name="flight_id" value="{{ $f->id }}"/>
+                <input type="hidden" name="flight_type" value="1500"/>
+                <button type="submit">1500</button>
+            </form>
             @endif
+        </td>
         @endif
     </tr>
     @endforeach

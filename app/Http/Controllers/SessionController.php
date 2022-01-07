@@ -37,7 +37,7 @@ class SessionController extends Controller
     {
         $attributes = $request->validate([
             'email' => ['required', 'email'],
-            'password' => ['required', 'min:7', 'max:30']
+            'password' => ['required']
         ]);
 
         if (auth()->attempt($attributes)) {

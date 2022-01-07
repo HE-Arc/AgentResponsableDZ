@@ -28,7 +28,6 @@ Route::get('/', [FlightController::class, 'index'])->name('home');
 //     ]);
 // });
 
-Route::resource('flight', FlightController::class);
 
 
 Route::get('register', [AuthController::class, 'create'])->middleware('guest')->name('register');
@@ -39,6 +38,9 @@ Route::post('login', [SessionController::class, 'store'])->middleware('guest')->
 Route::post('logout', [SessionController::class, 'destroy'])->middleware('auth')->name('logout');
 Route::post('flight/removepassenger',[FlightController::class,"removePassenger"])->name('flight.removePassenger');
 Route::post('flight/addpassenger',[FlightController::class,"addPassenger"])->name('flight.addPassenger');
+Route::put('flight/join',[FlightController::class,"join"])->name('flight.join');
+
+Route::resource('flight', FlightController::class);
 
 // be carreful of order, if you put user/manage under Route::resource('user'), you can't access the page
 Route::get('user/manage', [UserController::class, 'manage'])->middleware('auth')->name('user.manage');
