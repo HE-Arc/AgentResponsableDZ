@@ -13,7 +13,7 @@ use function PHPUnit\Framework\isNull;
 class FlightController extends Controller
 {
     public function index() {
-        $flights = Flight::orderBy('departure', 'asc')->get();
+        $flights = Flight::where('departure','>',now())->orderBy('departure', 'asc')->get();
         return view('schedule', ['flights' => $flights, "user" => auth()->user()]);
     }
 

@@ -3,7 +3,6 @@
 <?php
 use App\Http\Controllers\FlightController;
 ?>
-
 <table>
     <tr>
         <td>Avion</td>
@@ -12,6 +11,9 @@ use App\Http\Controllers\FlightController;
         <td>Avion n°</td>
         @if (isset($user))
             <td>Rejoindre</td>
+        @endif
+        @if (isset($user) && $user->is_RDZ)
+            <td>Modifier</td>
         @endif
     </tr>
     @foreach ($flights as $f)
@@ -30,29 +32,36 @@ use App\Http\Controllers\FlightController;
         <td>{{ $f->id }}</td>
         @if (isset($user))
         <td>
-            @if(strtotime($f->departure) < strtotime(Date::now() ) ||  count($f->users) >= $f->plane->seat_count ||   FlightController::in_flight($user,$f)/*If the flight already departed*/)
-            @elseif($user->credits4000 >= 0)
-            <form action="{{ route('flight.join') }}" method="post">
-                @csrf
-                @method('put')
-                <input type="hidden" name="flight_id" value="{{ $f->id }}"/>
-                <input type="hidden" name="flight_type" value="4000"/>
-                <button type="submit">4000</button>
-            </form>
-            @elseif($user->credits1500 <= 0)
-            <form action="{{ route('flight.join') }}" method="post">
-                @csrf
-                @method('put')
-                <input type="hidden" name="flight_id" value="{{ $f->id }}"/>
-                <input type="hidden" name="flight_type" value="1500"/>
-                <button type="submit">1500</button>
-            </form>
+            @if(strtotime($f->departure) < strtotime(Date::now() ) ||  count($f->users) >= $f->plane->seat_count ||   !FlightController::in_flight($user,$f)/*If the flight already departed*/)
+                @if($user->credits4000 > 0)
+                <form action="{{ route('flight.join') }}" method="post">
+                    @csrf
+                    @method('put')
+                    <input type="hidden" name="flight_id" value="{{ $f->id }}"/>
+                    <input type="hidden" name="flight_type" value="4000"/>
+                    <button type="submit">4000</button>
+                </form>
+                @endif
+                @if($user->credits1500 > 0)
+                <form action="{{ route('flight.join') }}" method="post">
+                    @csrf
+                    @method('put')
+                    <input type="hidden" name="flight_id" value="{{ $f->id }}"/>
+                    <input type="hidden" name="flight_type" value="1500"/>
+                    <button type="submit">1500</button>
+                </form>
+                @endif
+            </td>
             @endif
-        </td>
+        @endif
+        @if (isset($user) && $user->is_RDZ)
+            <td><a href="{{ route('flight.edit',$f->id) }}">Modifier</a></td>
         @endif
     </tr>
     @endforeach
-
 </table>
+@if (isset($user) && $user->is_RDZ)
+    <a href="{{ route('flight.create') }}">Ajouter un vol</a>
+@endif  
 @endsection
 
