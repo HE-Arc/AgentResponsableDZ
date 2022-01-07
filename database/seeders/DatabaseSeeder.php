@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             'phone_number' => '1234567890',
             'password' => bcrypt('IAmRoot'),
             'is_RDZ' => true,
+            'credits4000' => 40,
+            'credits1500' => 20,
         ]);
 
         // insert lambda user
