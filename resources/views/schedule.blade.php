@@ -5,7 +5,7 @@ use App\Http\Controllers\FlightController;
 $counter = 0;
 ?>
 @if(sizeof($flights)==0)
-    <div class="alert alert-info">Aucun avion est prévu pour le moment</div>
+    <div class="alert alert-info">Aucun avion n'est prévu pour le moment</div>
 @else
     <div class="row">
         <div class="col border bg-light">Avion</div>
