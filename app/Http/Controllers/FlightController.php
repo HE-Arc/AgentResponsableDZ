@@ -13,7 +13,7 @@ use function PHPUnit\Framework\isNull;
 class FlightController extends Controller
 {
     public function index() {
-        $flights = Flight::where('departure','>',now())->orderBy('departure', 'asc')->get();
+        $flights = Flight::where('departure','>',date_format(now(),"Y-m-d 1:00:00"))->orderBy('departure', 'asc')->get();
         return view('schedule', ['flights' => $flights, "user" => auth()->user()]);
     }
 
@@ -180,7 +180,6 @@ class FlightController extends Controller
         //Check user credits
         $type = $request->input("flight_type");
         
-        
         if($type == 4000) {
             if($user->credits4000 > 0){
                 $user->update(["credits4000"=> $user->credits4000 - 1]);
@@ -199,6 +198,36 @@ class FlightController extends Controller
         
         return redirect()->route('flight.index')
             ->with('error',"Crédits insufisant");
+    }
+
+    public function leave(Request $request){
+        if (!UserController::isConnected()){
+            return redirect('/')->with('error', 'Vous n\'êtes pas connecté');
+        }
+        $request->validate([
+            'flight_id' => 'required|exists:flights,id'
+        ]);
+        $flight = Flight::findOrFail($request->input("flight_id"));
+
+        //Check if flight is departed
+        if(strtotime($flight->departure) < time()){
+            return redirect()->route('flight.index')
+            ->with('error',"Trop tard pour quitter ce vol");
+        }
+
+        //Check if user is already in flight
+        $user = auth()->user();
+        if(!FlightController::in_flight($user,$flight)){
+            
+            return redirect()->route('flight.index')
+            ->with('error',"Vous n'êtes pas dans ce vol");
+        }
+
+        $flight->users()->detach($user->id);
+
+        return redirect()->route('flight.index')
+            ->with('success',"Vous n'êtes plus dans ce vol. Veuillez voir avec le RDZ pour un remboursement");
+
     }
 
     public static function in_flight($user,$flight){
