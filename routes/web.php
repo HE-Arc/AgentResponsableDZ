@@ -52,5 +52,6 @@ Route::get('user/user_manage_ajax', [UserController::class, 'manage_ajax'])->mid
 Route::put('user/update_email/{id}', [UserController::class, 'update_email'])->middleware('auth')->name('user.update_email');
 Route::put('user/update_password/{id}', [UserController::class, 'update_password'])->middleware('auth')->name('user.update_password');
 Route::put('user/update_from_admin/{id}', [UserController::class, 'update_from_admin'])->middleware('auth')->name('user.update_from_admin');
+Route::put('user/update_password_from_admin/{id}', [UserController::class, 'update_password_from_admin'])->middleware('auth')->name('user.update_password_from_admin');
 Route::resource('user', UserController::class);
 

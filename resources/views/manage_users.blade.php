@@ -19,7 +19,7 @@
         @csrf
         @method("put")
 
-        <input type="hidden" name="id" id="user_to_change"></input>
+        <input type="hidden" name="id" id="user_to_change1"></input>
 
         <label for="name">Nom</label>
 
@@ -83,33 +83,6 @@
             @enderror
         </div>
 
-
-        <div class="row">
-
-            <label for="password">mot de passe</label>
-            <input
-                type="password"
-                name="password"
-                required
-                />
-            @error('password')
-            <p class="text-danger">{{ $message }}</p>
-            @enderror
-        </div>
-
-        <div class="row">
-
-            <label for="password_confirmation">confirmer mot de passe</label>
-            <input
-                type="password"
-                name="password_confirmation"
-                required
-                />
-            @error('confirm_password')
-            <p class="text-danger">{{ $message }}</p>
-            @enderror
-        </div>
-
         <div class="row">
         </div>
         <div class="row">
@@ -124,20 +97,7 @@
             <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
-        <div class="row">
 
-            <label for="credits1500">Crédits sauts a 1500m</label>
-            <input
-            type="number"
-            id="credits1500"
-            name="credits1500"
-            value="{{ old('credits4000') }}"
-            required />
-            @error('credits1500')
-            <p class="text-danger">{{ $message }}</p>
-            @enderror
-
-        </div>
         <div class="row">
 
             <label for="credits4000">Crédits sauts a 4000m</label>
@@ -153,6 +113,56 @@
             @enderror
 
         </div>
+
+        <div class="row">
+
+            <label for="credits1500">Crédits sauts a 1500m</label>
+            <input
+            type="number"
+            id="credits1500"
+            name="credits1500"
+            value="{{ old('credits4000') }}"
+            required />
+            @error('credits1500')
+            <p class="text-danger">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="row">
+            <input type="submit" value="valider"></input>
+        </div>
+    </form>
+
+    <form method="post" action="{{ route('user.update_password_from_admin', auth()->user()->id)}}">
+
+        <input type="hidden" name="id" id="user_to_change2"></input>
+
+        @csrf
+        @method("put")
+        <div class="row">
+            <label for="password">mot de passe</label>
+            <input
+                type="password"
+                name="password"
+                required
+                />
+            @error('password')
+            <p class="text-danger">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="row">
+            <label for="password_confirmation">confirmer mot de passe</label>
+            <input
+                type="password"
+                name="password_confirmation"
+                required
+                />
+            @error('confirm_password')
+            <p class="text-danger">{{ $message }}</p>
+            @enderror
+        </div>
+
         <div class="row">
             <input type="submit" value="valider"></input>
         </div>

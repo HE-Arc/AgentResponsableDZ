@@ -1,5 +1,6 @@
 function writeUser(json) {
-    document.getElementById("user_to_change").value = json["id"];
+    document.getElementById("user_to_change1").value = json["id"];
+    document.getElementById("user_to_change2").value = json["id"];
 
     document.getElementById('name').value = json['name'];
     document.getElementById('surname').value = json['surname'];

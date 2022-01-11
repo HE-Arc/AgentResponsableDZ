@@ -6,9 +6,19 @@
             </a>
         </div>
 
-        <div class="col-10 align-self-center">
+        <div class="col-5 align-self-center">
             @auth
             <span class="d-flex justify-content-center text-center"><strong>Bienvenue, {{ auth()->user()->surname }} !</strong></span>
+            @endauth
+        </div>
+        <div class="col-5 align-self-center">
+            @auth
+            <div class="row">
+                <span class="d-flex justify-content-center text-center">Crédits 4000m: {{ auth()->user()->credits4000 }}</span>
+            </div>
+            <div class="row">
+                <span class="d-flex justify-content-center text-center">Crédits 1500m: {{ auth()->user()->credits1500 }}</span>
+            </div>
             @endauth
         </div>
         <div class="col-1 align-self-center">
