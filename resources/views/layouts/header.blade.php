@@ -12,7 +12,7 @@
             @endauth
         </div>
         <div class="col-1 align-self-center">
-            <nav class="navbar">
+            <nav class="d-flex justify-content-end">
                 <div class="container-fluid">
                     <button onClick="toggleNavBar();">
                         <i class="fas fa-bars"></i>
@@ -21,36 +21,38 @@
             </nav>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <div class="collapse navbar-collapse" id="navbarLinks">
-                <div class="bg-light shadow-3 p-2">
-                    @guest
-                    <div class="row">
-                        <a class="link-dark" href="{{ route('login') }}">se connecter</a>
-                    </div>
-                    <div class="row">
-                        <a class="link-dark" href="{{ route('register') }}">crée un compte</a>
-                    </div>
-                    @endguest
-                    @auth
-                    <div class="row">
-                        <a class="link-dark" href="{{ route('user.edit', auth()->user()->id) }}">Modifier le profil</a>
-                    </div>
-                    @if(auth()->user()->is_RDZ)
-                    <div class="row">
-                        <a class="link-dark" href="{{ route('user.manage', auth()->user()->id) }}">Manage les utilisateurs</a>
-                    </div>
-                    @endif
-                    <div class="row">
-                        <form method="post" action="{{ route('logout') }}">
-                            @csrf
-                            <button class="btn btn-alert" type="submit">se déconnecter</button>
-                        </form>
-                    </div>
-                    @endauth
+    <div class="row collapse navbar-collapse" id="navbarLinks">
+        <div class="container bg-light shadow-3 p-2">
+            <div class="row">
+            <div class="col">
+                @guest
+                <div class="row">
+                    <a class="link-dark" href="{{ route('login') }}">se connecter</a>
+                </div>
+                <div class="row">
+                    <a class="link-dark" href="{{ route('register') }}">crée un compte</a>
+                </div>
+                @endguest
+                @auth
+                <div class="row">
+                    <a class="link-dark" href="{{ route('user.edit', auth()->user()->id) }}">Modifier le profil</a>
+                </div>
+                @if(auth()->user()->is_RDZ)
+                <div class="row">
+                    <a class="link-dark" href="{{ route('user.manage', auth()->user()->id) }}">Manage les utilisateurs</a>
+                </div>
+                @endif
+            </div>
+            <div class="col">
+                <div class="d-flex justify-content-end">
+                    <form method="post" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="btn btn-danger" type="submit">se déconnecter</button>
+                    </form>
                 </div>
             </div>
+            </div>
+            @endauth
         </div>
     </div>
 </header>
