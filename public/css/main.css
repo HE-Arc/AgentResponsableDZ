@@ -1,7 +1,5 @@
-header{
+#header-image{
     background-color: orange;
-    height: 2em;
-    display: inline-flex;
     width: 100%;
     background-image: url(/images/header_image.png);
     background-repeat: no-repeat;
