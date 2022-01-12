@@ -9,7 +9,7 @@
             @method('put')
 
             <div class="row">
-                <label for="name">Nouvea nom: </label>
+                <label for="name">Nouveau nom: </label>
                 <input type="text" name="name" value="{{ auth()->user()->name }}">
                 @error('name')
                     <p class="text-danger">{{ $message }}</p>
