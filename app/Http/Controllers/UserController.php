@@ -194,7 +194,6 @@ class UserController extends Controller
         }
 
         $user->update($attributes);
-        $user->update(['is_RDZ' => $request->has('isRDZ')]);
 
         return redirect()->route('home')
         ->with('success', 'user updated');
