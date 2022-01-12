@@ -21,7 +21,7 @@ $counter = 0;
     </div>
 
     @foreach ($flights as $f)
-    <div class="row @if ($counter++ % 2 == 0) bg-light @else bg-warning @endif text-center">
+    <div class="row @if ($counter++ % 2 == 0) bg-light @else bg-warning @endif">
         <div class="col">
             {{ $f->plane->model }}
         </div>
@@ -59,13 +59,13 @@ $counter = 0;
         @if (isset($user) && $user->is_RDZ)
             <div class="col"><a href="{{ route('flight.edit',$f->id) }}">Modifier</a></div>
         @endif
-        <div class="col">{{$counter}}</div>
+        <div class="col"><a href="{{route('flight.show',$f->id)}}">{{$counter}}</a></div>
     </div>
     @endforeach
-@endif  
+@endif
 @if (isset($user) && $user->is_RDZ)
     <a href="{{ route('flight.create') }}">Ajouter un vol</a>
-@endif  
+@endif
 
 
 @endsection
